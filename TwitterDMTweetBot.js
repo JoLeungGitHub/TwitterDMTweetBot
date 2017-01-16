@@ -14,6 +14,8 @@ module.exports = {
 */
 var api_login = require('./apilogin');
 
+var fs = require('fs');
+
 
 //Input API Keys in correct keys
 var T = new Twit(api_login);
@@ -28,6 +30,14 @@ function justTweeted(err, data, response) {
 	console.log("DM Bot tweeted: " + data.text);
 	console.log("id: " + id);
 	console.log("++++++++++++++++++++++++++++++");
+
+	//log the output in a .txt file
+	var tweetlog = 
+		"++++++++++++++++++++++++++++++" + "\n" +
+		"DM Bot tweeted: " + data.text + "\n" +
+		"id: " + id + "\n" +
+		"++++++++++++++++++++++++++++++" + "\n";
+	fs.appendFile('log.txt', tweetlog);
 };
 
 //Tweet that the bot has started
@@ -42,7 +52,7 @@ stream.on('follow', function (friendsMsg) {
 	T.post('friendships/create', { user_id: friend, follow: false});
 });
 
-//If someone DMs the bot
+//If someone DMs the bot, tweet it
 stream.on('direct_message', function (directMsg) {
 	var fromName = directMsg.direct_message.sender.name;
 	var fromScreenName = directMsg.direct_message.sender.screen_name;
@@ -55,6 +65,15 @@ stream.on('direct_message', function (directMsg) {
 	console.log("at: " + time);
 	T.post('statuses/update', { status: message }, justTweeted);
 	console.log("------------------------------");
+
+	//log the input in a .txt file
+	var log = 
+		"------------------------------" + "\n" +
+		"DM recieved: " + message + "\n" +
+		"from: " + fromName + " (" + fromScreenName + ")" + "\n" +
+		"at: " + time + "\n" +
+		"------------------------------" + "\n";
+	fs.appendFile('log.txt', log);
 
 	/*
 	//used to create a file of the data recieved, to find out what variables to use.
