@@ -1,0 +1,21 @@
+{
+  "name": "npm_twitterbot",
+  "version": "1.0.0",
+  "description": "node package manager for twitterbot",
+  "main": "TwitterDMTweetBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "twitter",
+    "dm",
+    "tweet",
+    "bot",
+    "twit"
+  ],
+  "author": "Jonathan Leung",
+  "license": "ISC",
+  "dependencies": {
+    "twit": "^2.2.5"
+  }
+}
