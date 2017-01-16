@@ -82,4 +82,3 @@ stream.on('direct_message', function (directMsg) {
 	fs.writeFile('dm.json', json);
 	*/
 })
-//stream.on('user_event', T.post('statuses/update', {status: text}))
