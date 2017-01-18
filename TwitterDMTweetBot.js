@@ -1,4 +1,7 @@
-console.log("Begin");
+// Bot created in JavaScript to learn the basics of the twitter API and Node.js
+// By: Jonathan Leung
+
+console.log('Begin');
 
 var Twit = require('twit');
 
@@ -26,17 +29,17 @@ var stream = T.stream('user');
 //Function to log what it tweeted
 function justTweeted(err, data, response) {
 	var id = data.id;
-	console.log("++++++++++++++++++++++++++++++");
-	console.log("DM Bot tweeted: " + data.text);
-	console.log("id: " + id);
-	console.log("++++++++++++++++++++++++++++++");
+	console.log('++++++++++++++++++++++++++++++');
+	console.log('DM Bot tweeted: ' + data.text);
+	console.log('id: ' + id);
+	console.log('++++++++++++++++++++++++++++++');
 
 	//log the output in a .txt file
 	var tweetlog = 
-		"++++++++++++++++++++++++++++++" + "\n" +
-		"DM Bot tweeted: " + data.text + "\n" +
-		"id: " + id + "\n" +
-		"++++++++++++++++++++++++++++++" + "\n";
+		'++++++++++++++++++++++++++++++' + '\n' +
+		'DM Bot tweeted: ' + data.text + '\n' +
+		'id: ' + id + '\n' +
+		'++++++++++++++++++++++++++++++' + '\n';
 	fs.appendFile('log.txt', tweetlog);
 };
 
@@ -47,9 +50,9 @@ T.post('statuses/update', { status: 'Bot Start.' }, justTweeted);
 stream.on('follow', function (friendsMsg) {
 	var friend = friendsMsg.source.id;
 	var screenName = friendsMsg.source.screen_name;
-	console.log("Bot followed: " + screenName);
+	console.log('Bot followed: ' + screenName);
 
-	T.post('friendships/create', { user_id: friend, follow: false});
+	T.post('friendships/create', { user_id: friend, follow: true});
 });
 
 //If someone DMs the bot, tweet it
@@ -59,20 +62,20 @@ stream.on('direct_message', function (directMsg) {
 	var message = directMsg.direct_message.text;
 	var time = directMsg.direct_message.created_at;
 
-	console.log("------------------------------");
-	console.log("DM recieved: " + message);
-	console.log("from: " + fromName + " (" + fromScreenName + ")");
-	console.log("at: " + time);
+	console.log('------------------------------');
+	console.log('DM recieved: ' + message);
+	console.log('from: ' + fromName + ' (' + fromScreenName + ')');
+	console.log('at: ' + time);
 	T.post('statuses/update', { status: message }, justTweeted);
-	console.log("------------------------------");
+	console.log('------------------------------');
 
 	//log the input in a .txt file
 	var log = 
-		"------------------------------" + "\n" +
-		"DM recieved: " + message + "\n" +
-		"from: " + fromName + " (" + fromScreenName + ")" + "\n" +
-		"at: " + time + "\n" +
-		"------------------------------" + "\n";
+		'------------------------------' + '\n' +
+		'DM recieved: ' + message + '\n' +
+		'from: ' + fromName + ' (' + fromScreenName + ')' + '\n' +
+		'at: ' + time + '\n' +
+		'------------------------------' + '\n';
 	fs.appendFile('log.txt', log);
 
 	/*
